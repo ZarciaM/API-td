@@ -1,0 +1,83 @@
+openapi: 3.1.0
+info:
+  title: Customer API
+  version: 1.0.0
+servers:
+  - url: 'https://localhost.std23011.com'
+paths:
+  /customers/{customerId}:
+    put:
+      tags:
+        - Customer
+      summary: Update an entire customer
+      operationId: updateCustomer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Full customer object to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '200':
+          description: The updated customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+
+    patch:
+      tags:
+        - Customer
+      summary: Partially update a customer
+      operationId: partiallyUpdateCustomer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Partial customer object to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PartialCustomer'
+      responses:
+        '200':
+          description: The updated customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+
+components:
+  schemas:
+    Customer:
+      type: object
+      required:
+        - id
+        - name
+        - age
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        age:
+          type: integer
+
+    PartialCustomer:
+      type: object
+      properties:
+        name:
+          type: string
+        age:
+          type: integer
